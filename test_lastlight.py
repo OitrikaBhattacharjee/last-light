@@ -130,7 +130,7 @@ class V(unittest.TestCase):
         out = Ph.strip_png(self.png())
         self.assertNotIn(b"secret", out)
         self.assertIn(b"IDAT", out)
-        
+
     def test_jpeg_drops_trailing_data_and_other_app_segments(self):
         data = (b"\xff\xd8" + b"\xff\xe0\x00\x10JFIF\x00\x01\x01\x00\x00\x01\x00\x01\x00\x00"
                 + b"\xff\xe3\x00\x08SECRET" + b"\xff\xda\x00\x02pixels\xff\xd9"
@@ -140,7 +140,7 @@ class V(unittest.TestCase):
         self.assertNotIn(b"ftyp", out)
         self.assertNotIn(b"GPS", out)
         self.assertTrue(out.endswith(b"pixels\xff\xd9"))
-        
+
     def test_rejects_non_images_and_big_files(self):
         d = tempfile.mkdtemp()
         bad = os.path.join(d, "x.jpg"); open(bad, "wb").write(b"hello")
