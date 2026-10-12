@@ -1,4 +1,7 @@
 .env
+.env.*
+.venv/
+venv/
 *.html
 !example-card.html
 __pycache__/
@@ -8,3 +11,9 @@ puzzle*.svg
 *.jpg
 *.jpeg
 *.png
+*.JPG
+*.JPEG
+*.PNG
+*.webp
+*.heic
+*.HEIC
