@@ -1,0 +1,10 @@
+.env
+*.html
+!example-card.html
+__pycache__/
+walks.jsonl
+puzzle.json
+puzzle*.svg
+*.jpg
+*.jpeg
+*.png
