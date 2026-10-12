@@ -24,6 +24,15 @@ DEFAULT_MODEL = os.environ.get("LASTLIGHT_MODEL", "gemma3:4b")
 DEFAULT_URL = "http://127.0.0.1:11434/api/generate"
 LOOPBACK = {"127.0.0.1", "localhost", "::1"}
 
+
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, *args, **kwargs):
+        return None
+
+
+# Ignore system/environment proxies and never follow redirects, so a request
+# meant for this machine cannot be routed or bounced anywhere else.
+OPENER = urllib.request.build_opener(urllib.request.ProxyHandler({}), _NoRedirect())
 FALLBACK = {
     "title": "A short walk before dark",
     "look_for": [
@@ -93,7 +102,7 @@ def ask_model(prompt, model, url, timeout=180):
     body = json.dumps({"model": model, "prompt": prompt, "stream": False,
                        "format": "json", "options": {"temperature": 0.7}}).encode()
     req = urllib.request.Request(url, data=body, headers={"Content-Type": "application/json"})
-    with urllib.request.urlopen(req, timeout=timeout) as r:
+       with OPENER.open(req, timeout=timeout) as r:
         return json.loads(r.read().decode())["response"]
 
 
