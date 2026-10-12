@@ -40,6 +40,8 @@ If Ollama is not running, you get a plain built-in card and the footer says no m
 - Model output is checked for shape and length, then HTML escaped, so a bad answer cannot inject markup.
 - Times are computed by code, never by the model. They are estimates, so take a torch if unsure.
 - The model is told not to identify species or suggest touching or picking anything.
+- Requests to the model ignore system proxy settings and are never redirected, so they cannot be routed off this machine.
+- Photos are cleaned with an allowlist: only the data needed to draw the picture is kept, and anything after the end of the image is dropped.
 
 ## Tests
 
